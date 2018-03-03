@@ -1,3 +1,4 @@
+
 import java.util.Scanner;
 
 public class RLE {
@@ -35,9 +36,12 @@ public class RLE {
                 System.out.print("The decoded data is: " + decodedMessage);
                 System.out.println("");
 
-            } if (userOption == 4) {
+            } else if (userOption == 4) {
                 System.out.println("Program terminated");
                 break;
+            }
+            else{
+                System.out.print("Error! Invalid input. Please enter an integer from 1-4");
             }
         }
     }
@@ -61,14 +65,13 @@ public class RLE {
             charArray[i] = array.charAt(i);
         }
 
-        while(charCount == 1){
-            return;
-            //FIXME
+        if(charCount == 1){
+            charArray = strcharArray.toCharArray();
+            return charArray;
         }
-        while(charCount < 1){
+        if(charCount < 1){
             return null;
         }
-
         return charArray;
     }
 
@@ -98,19 +101,15 @@ public class RLE {
     public static int findDecodeLength(String rleString) {
         int i;
         int sum = 0;
-        String stringSum = "";
+        String stringSum = "0";
         int integer = 0;
         for (i = 0; i < rleString.length(); i++) {
-            while ((int)rleString.charAt(i) > 64 && (int)rleString.charAt(i) < 91){
-                sum++;
+            while ((int)rleString.charAt(i) > 47 && (int)rleString.charAt(i) < 58) {
+                stringSum += rleString.charAt(i);
                 i++;
             }
-            while((int)rleString.charAt(i) > 97 && (int)rleString.charAt(i) < 122){
-                sum++;
-                i++;
-            }//FIXME
-            while ((int)rleString.charAt(i) > 48 && (int)rleString.charAt(i) < 58) {
-                stringSum += rleString.charAt(i);
+            while (stringSum.equals("0")) {
+                stringSum += 1;
                 i++;
             }
             integer = Integer.parseInt(stringSum);
@@ -126,7 +125,31 @@ public class RLE {
     }
 
     public static char[][] encodeRLE(String inputString){
+        char[][]encodedRLE = new char[findDecodeLength(inputString)][inputString.charAt(i)];
+        int i;
+        int j;
+        int count = 0;
+        char charCount;
 
+        for(i = 0; i < inputString.length(); i++){
+            while(i < inputString.length() && inputString.charAt(i) == inputString.charAt(i + 1)){
+                count++;
+                i++;
+
+            }
+            charCount = inputString.charAt(i);
+            encodedRLE[i] = toCharArray(count, charCount);
+        }
+
+        return encodedRLE;
     }
-
 }
+
+/*
+while(input.charAt(i) == input.charAt(i + 1){
+count++;
+}
+for out of bounds: if i is in bounds && ...
+...toCharArray(count, charAt(i - 1)
+ */
+
